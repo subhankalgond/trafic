@@ -1,0 +1,8 @@
+The sitemap is generated at build time from vite.config.ts when VITE_SITE_URL is set
+(see the siteMeta plugin). With no custom domain configured, no sitemap is emitted.
+
+To connect a custom domain:
+  1. Set VITE_SITE_URL=https://your-domain.com in frontend/.env
+  2. Rebuild: npm run build
+  3. Point your DNS at your host and serve the dist/ folder (or run the backend
+     in production mode and serve dist/ behind the same origin).

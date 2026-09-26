@@ -1,0 +1,126 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-navy-900 text-slate-200 antialiased;
+  font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* thin dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #16344f #0b1f33;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #16344f;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: #0b1f33;
+}
+
+/* glass panel helper */
+.glass {
+  background: rgba(11, 31, 51, 0.72);
+  border: 1px solid rgba(125, 211, 252, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+/* reduced motion: disable transitions and animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* leaflet dark tuning */
+.leaflet-container {
+  background: #0b1f33;
+  font-family: inherit;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #102a44;
+  color: #e2e8f0;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+}
+.leaflet-popup-content b {
+  color: #7dd3fc;
+}
+.leaflet-bar a {
+  background: #102a44;
+  color: #e2e8f0;
+  border-bottom-color: #16344f;
+}
+.leaflet-bar a:hover {
+  background: #16344f;
+}
+.leaflet-control-attribution {
+  background: rgba(6, 17, 31, 0.8) !important;
+  color: #64748b !important;
+}
+.leaflet-control-attribution a {
+  color: #7dd3fc !important;
+}
+
+/* pulsing emergency marker */
+@keyframes emergency-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+}
+.emergency-pulse {
+  animation: emergency-pulse 1.6s ease-in-out infinite;
+}
+
+/* scanning effect for plate verification */
+@keyframes scanline {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+  animation: scanline 1.4s linear infinite;
+}

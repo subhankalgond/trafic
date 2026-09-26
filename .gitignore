@@ -1,0 +1,30 @@
+# Portable local Postgres (do not commit)
+.localtools/
+
+# Dependencies
+node_modules/
+
+# Environment files (contain secrets). Example files are tracked.
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# Build output
+backend/dist/
+frontend/dist/
+
+# Runtime uploads (user-generated content)
+backend/uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Tool artifacts
+.kilo/

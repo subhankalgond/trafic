@@ -1,0 +1,10 @@
+{
+  "name": "SmartFlow AI",
+  "short_name": "SmartFlow",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#06111F",
+  "background_color": "#06111F",
+  "display": "standalone"
+}
