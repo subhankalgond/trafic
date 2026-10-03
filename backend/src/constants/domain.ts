@@ -15,6 +15,14 @@ export const SEVERITIES = ['low', 'medium', 'high', 'critical'] as const;
 export const INCIDENT_STATUSES = ['reported', 'under_review', 'verified', 'active', 'resolved'] as const;
 export const SIM_MODES = ['normal', 'traffic_management', 'emergency', 'manual'] as const;
 
+/**
+ * Master safety switch for physical signal actuation. The simulator updates
+ * database rows only; real traffic-light hardware is never touched unless an
+ * authorized integration sets SIGNAL_ACTUATION_ENABLED=true and connects a
+ * certified controller. This flag must stay false in development.
+ */
+export const PHYSICAL_ACTUATION = process.env.SIGNAL_ACTUATION_ENABLED === 'true';
+
 export type VehicleType = (typeof VEHICLE_TYPES)[number];
 export type VehiclePriority = (typeof VEHICLE_PRIORITIES)[number];
 export type TrafficLevel = (typeof TRAFFIC_LEVELS)[number];
@@ -75,3 +83,15 @@ export const INCIDENT_STATUS_LABELS: Record<IncidentStatus, string> = {
   active: 'Active',
   resolved: 'Resolved',
 };
+
+/**
+ * Intersections instrumented by the SignalFlow signal simulator. Coordinates
+ * let the emergency-response map correlate real geography with the simulator's
+ * signal states. Extend this list when more intersections are instrumented.
+ */
+export const SIMULATED_INTERSECTIONS = [
+  { name: 'NH 66 Central Junction', lat: 13.9824, lng: 74.556 },
+  { name: 'Pumpwell Circle', lat: 12.8752, lng: 74.8376 },
+] as const;
+
+export type SimulatedIntersection = (typeof SIMULATED_INTERSECTIONS)[number];

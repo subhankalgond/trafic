@@ -10,6 +10,7 @@ import * as vehicles from '../controllers/vehicleController';
 import * as incidents from '../controllers/incidentController';
 import * as signals from '../controllers/signalController';
 import * as emergency from '../controllers/emergencyController';
+import * as emergencyResponse from '../controllers/emergencyResponseController';
 import * as notifications from '../controllers/notificationController';
 import * as admin from '../controllers/adminController';
 
@@ -84,6 +85,18 @@ router.get('/emergency', apiLimiter, asyncHandler(emergency.listEmergencyEvents)
 router.post('/emergency/simulate', authenticate, requireOperator, asyncHandler(emergency.simulateEmergency));
 router.post('/emergency/reset', authenticate, requireOperator, asyncHandler(emergency.resetEmergency));
 router.get('/analytics/emergency', apiLimiter, asyncHandler(emergency.emergencyAnalytics));
+
+// ---------- emergency response (authorized registry + routing + safe priority) ----------
+router.post('/emergency-response/verify-plate', authenticate, apiLimiter, asyncHandler(emergencyResponse.verifyPlate));
+router.get('/emergency-response/hospitals', authenticate, apiLimiter, asyncHandler(emergencyResponse.nearbyHospitals));
+router.get('/emergency-response/route', authenticate, apiLimiter, asyncHandler(emergencyResponse.route));
+router.post('/emergency-response/sessions', authenticate, apiLimiter, asyncHandler(emergencyResponse.startSession));
+router.get('/emergency-response/sessions/active', authenticate, asyncHandler(emergencyResponse.activeSession));
+router.put('/emergency-response/sessions/:id/gps', authenticate, asyncHandler(emergencyResponse.gpsPing));
+router.put('/emergency-response/sessions/:id/end', authenticate, asyncHandler(emergencyResponse.endSession));
+router.post('/emergency-response/sessions/:id/request-priority', authenticate, apiLimiter, asyncHandler(emergencyResponse.requestPriority));
+router.post('/emergency-response/sessions/:id/release-priority', authenticate, apiLimiter, asyncHandler(emergencyResponse.releasePriority));
+router.get('/emergency-response/intersections', optionalAuth, asyncHandler(emergencyResponse.listIntersections));
 
 // ---------- notifications + saved routes ----------
 router.get('/notifications', authenticate, asyncHandler(notifications.myNotifications));

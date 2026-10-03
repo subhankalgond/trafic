@@ -9,6 +9,7 @@ import { DEMO_DISCLAIMER } from '../config';
 
 const USER_NAV = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/emergency-response', label: 'Emergency', icon: Siren },
   { to: '/live-traffic', label: 'Live Traffic', icon: MapIcon },
   { to: '/simulation', label: '3D Simulation', icon: Boxes },
   { to: '/routes', label: 'Routes', icon: RouteIcon },
@@ -36,6 +37,7 @@ const ADMIN_NAV = [
 
 const MOBILE_NAV = [
   { to: '/dashboard', label: 'Home', icon: LayoutDashboard },
+  { to: '/emergency-response', label: 'SOS', icon: Siren },
   { to: '/live-traffic', label: 'Traffic', icon: MapIcon },
   { to: '/simulation', label: 'Simulate', icon: Boxes },
   { to: '/user-reports', label: 'Reports', icon: Flag },

@@ -24,6 +24,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 
 import DashboardPage from './pages/DashboardPage';
+import EmergencyResponsePage from './pages/EmergencyResponsePage';
 import ReportIncidentPage from './pages/ReportIncidentPage';
 import UserReportsPage from './pages/UserReportsPage';
 import SavedRoutesPage from './pages/SavedRoutesPage';
@@ -102,6 +103,7 @@ function App() {
               }
             >
               <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/emergency-response" element={<EmergencyResponsePage />} />
               <Route path="/report-incident" element={<ReportIncidentPage />} />
               <Route path="/user-reports" element={<UserReportsPage />} />
               <Route path="/saved-routes" element={<SavedRoutesPage />} />

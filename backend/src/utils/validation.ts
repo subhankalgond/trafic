@@ -133,6 +133,64 @@ export const emergencySimulateSchema = z.object({
 export const adminUserStatusSchema = z.object({ status: userStatus });
 export const adminUserRoleSchema = z.object({ role: userRole });
 
+// ---------- emergency response ----------
+export const verifyEmergencyPlateSchema = z.object({
+  plate: z.string().trim().toUpperCase().min(4, 'Enter a plate like KA 05 MT 7321').max(20),
+  vehicleType,
+});
+
+export const nearbyHospitalsSchema = z.object({
+  latitude: z.coerce.number().min(-90).max(90),
+  longitude: z.coerce.number().min(-180).max(180),
+  radius: z.coerce.number().int().min(500).max(50000).optional(),
+});
+
+export const routeRequestSchema = z.object({
+  fromLat: z.coerce.number().min(-90).max(90),
+  fromLng: z.coerce.number().min(-180).max(180),
+  toLat: z.coerce.number().min(-90).max(90),
+  toLng: z.coerce.number().min(-180).max(180),
+});
+
+export const startEmergencySessionSchema = z.object({
+  plate: z.string().trim().toUpperCase().min(4).max(20),
+  vehicleType,
+  sessionType: z.enum(['hospital_transport', 'scene_response']).default('hospital_transport'),
+  origin: z
+    .object({
+      lat: z.coerce.number().min(-90).max(90),
+      lng: z.coerce.number().min(-180).max(180),
+      label: z.string().trim().max(200).optional(),
+    })
+    .optional(),
+  hospital: z
+    .object({
+      id: z.string().trim().min(1).max(120),
+      name: z.string().trim().min(1).max(200),
+      lat: z.coerce.number().min(-90).max(90),
+      lng: z.coerce.number().min(-180).max(180),
+    })
+    .optional(),
+  /** true when the client is running in clearly labelled simulation mode */
+  simulated: z.boolean().default(false),
+});
+
+export const priorityRequestSchema = z.object({
+  /** approach direction of the vehicle at the intersection */
+  direction: signalDirection,
+  distanceM: z.coerce.number().int().min(0).max(5000),
+  /** client-reported vehicle speed km/h (informational) */
+  speedKph: z.coerce.number().min(0).max(160).optional(),
+});
+
+export const gpsPingSchema = z.object({
+  lat: z.coerce.number().min(-90).max(90),
+  lng: z.coerce.number().min(-180).max(180),
+  speedKph: z.coerce.number().min(0).max(200).optional(),
+  headingDeg: z.coerce.number().min(0).max(360).optional(),
+  accuracyM: z.coerce.number().min(0).max(10000).optional(),
+});
+
 // ---------- misc ----------
 export const savedRouteSchema = z.object({
   name: z.string().trim().min(1, 'Route name is required').max(100),
