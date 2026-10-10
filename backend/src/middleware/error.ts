@@ -31,8 +31,22 @@ export function errorHandler(err: unknown, _req: Request, res: Response, _next: 
   const loggable = err instanceof Error ? `${err.message}\n${err.stack ?? ''}` : String(err);
   console.error(`[error] ${loggable}`);
 
-  const message = isDev && err instanceof Error ? err.message : 'Something went wrong. Please try again.';
-  res.status(500).json({ success: false, message });
+  // Always surface a safe, short cause code so production 500s can be
+  // diagnosed without full stack traces.
+  const cause =
+    err instanceof Error && err.message
+      ? err.message.slice(0, 160)
+      : 'unknown';
+
+  if (isDev && err instanceof Error) {
+    res.status(500).json({ success: false, message: err.message, cause });
+    return;
+  }
+  res.status(500).json({
+    success: false,
+    message: 'Something went wrong. Please try again.',
+    cause,
+  });
 }
 
 /** Wrap async route handlers so rejected promises reach the error handler. */
